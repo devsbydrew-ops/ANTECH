@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Antech Gadgets — New & Certified Pre-Owned iPhones and Samsung, Nairobi</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#155EEF; --blue-dark:#0B3FAE; --blue-soft:#EAF0FE;
+    --ink:#0B0E14; --white:#FFFFFF; --bg:#F4F6FA; --border:#E2E6EE; --muted:#5B6472;
+  }
+  body { font-family:'IBM Plex Sans', ui-sans-serif, sans-serif; background:var(--bg); color:var(--ink); }
+  .mono { font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  .card { transition: transform .15s ease, box-shadow .15s ease; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px rgba(11,14,20,0.10); }
+  .chip { transition: background-color .12s ease, color .12s ease, border-color .12s ease, transform .1s ease; }
+  .chip:active { transform: scale(0.96); }
+  #cartDrawer, #compareBar, #compareModal { transition: transform .22s ease, opacity .22s ease; }
+  #cartOverlay, #compareOverlay { transition: opacity .18s ease; }
+  ::-webkit-scrollbar { width: 8px; height:8px; }
+  ::-webkit-scrollbar-thumb { background: #D3D8E2; border-radius: 8px; }
+  .stamp { transform: rotate(-14deg); }
+  .fade-in { animation: fadeIn .25s ease; }
+  @keyframes fadeIn { from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .btn-primary { background:var(--blue); }
+  .btn-primary:hover { background:var(--blue-dark); }
+  .cmp-checkbox:checked + .cmp-label { background:var(--ink); color:#fff; border-color:var(--ink); }
+</style>
+</head>
+<body class="min-h-screen w-full pb-20">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-[var(--border)]">
+    <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-[var(--ink)] flex items-center justify-center">
+          <span class="mono text-white text-sm font-bold">A</span>
+        </div>
+        <span class="text-lg font-extrabold tracking-tight">Antech <span class="text-[var(--blue)]">Gadgets</span></span>
+      </div>
+
+      <div class="hidden md:block flex-1 max-w-sm relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="searchInput" type="text" placeholder="Search iPhone 11–17 Pro Max or Galaxy A/S series"
+          class="w-full pl-9 pr-3 py-2 rounded-lg border border-[var(--border)] bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue)]" />
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="admin.html" class="hidden md:block text-xs text-[var(--muted)] border border-[var(--border)] rounded-full px-3 py-1.5 hover:text-[var(--ink)] hover:border-[var(--ink)]">Admin</a>
+        <button id="cartBtn" class="flex items-center gap-2 bg-[var(--ink)] text-white rounded-full px-4 py-2 text-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          <span class="mono" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="md:hidden px-5 pb-3">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="searchInputMobile" type="text" placeholder="Search iPhone or Galaxy models"
+          class="w-full pl-9 pr-3 py-2 rounded-lg border border-[var(--border)] bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--blue)]" />
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto px-5 pt-12 pb-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <div>
+      <p class="mono text-xs tracking-wider uppercase text-[var(--blue)] mb-3">Nairobi, Kenya · iPhone 11–17 Pro Max · Galaxy A &amp; S series</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4 tracking-tight">Brand new or refurbished.<br />Every device tested and graded.</h1>
+      <p class="text-[var(--muted)] max-w-md leading-relaxed mb-6">Genuine Apple and Samsung devices — new in box, or inspected and graded pre-owned units with real battery health reported upfront. Compare specs side by side before you buy.</p>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="setLine('iPhone')" class="rounded-lg px-5 py-2.5 btn-primary text-white text-sm font-medium">Shop iPhone</button>
+        <button onclick="setLine('Galaxy A')" class="rounded-lg px-5 py-2.5 border border-[var(--ink)] text-sm font-medium">Shop Galaxy A</button>
+        <button onclick="setLine('Galaxy S')" class="rounded-lg px-5 py-2.5 border border-[var(--ink)] text-sm font-medium">Shop Galaxy S</button>
+      </div>
+    </div>
+    <div class="relative flex items-center justify-center h-64">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Deep%20Blue%20iPhone%2017%20Pro%20Max%20(cropped).jpg?width=900" alt="iPhone 17 Pro Max" class="h-56 object-contain drop-shadow-xl" loading="lazy" decoding="async" width="360" height="360" />
+      <div class="stamp absolute top-0 right-4 w-28 h-28 rounded-full border-[3px] border-[var(--blue)] bg-white/90 flex items-center justify-center text-[var(--blue)]">
+        <span class="mono text-[11px] font-bold text-center leading-tight">TESTED<br/>VERIFIED<br/>GRADE A</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="max-w-6xl mx-auto px-5 pb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white border border-[var(--border)] rounded-xl p-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-[var(--blue)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="text-xs text-[var(--muted)]">6-month warranty on refurbished</span>
+      </div>
+      <div class="bg-white border border-[var(--border)] rounded-xl p-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-[var(--blue)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h11v10H4zM15 10h3l2 3v4h-5z"/></svg>
+        <span class="text-xs text-[var(--muted)]">Battery health disclosed upfront</span>
+      </div>
+      <div class="bg-white border border-[var(--border)] rounded-xl p-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-[var(--blue)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1h1m8 0a2 2 0 11-4 0m4 0a2 2 0 104 0m-4 0h4m0 0h1a1 1 0 001-1v-3.5a1 1 0 00-.29-.7L18 8h-5v8z"/></svg>
+        <span class="text-xs text-[var(--muted)]">Free delivery, Nairobi CBD &amp; Westlands</span>
+      </div>
+      <div class="bg-white border border-[var(--border)] rounded-xl p-3 flex items-center gap-2">
+        <svg class="w-4 h-4 text-[var(--blue)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4-.83L3 20l1.17-3.5A7.93 7.93 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span class="text-xs text-[var(--muted)]">Order and pay via M-Pesa or WhatsApp</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="max-w-6xl mx-auto px-5 mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap gap-2" id="lineChips"></div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <div class="flex flex-wrap gap-2" id="conditionChips"></div>
+      <select id="sortSelect" class="mono text-xs border border-[var(--border)] rounded-lg px-2 py-1.5 bg-white text-[var(--muted)]">
+        <option value="featured">Featured</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+    </div>
+  </section>
+
+  <p class="max-w-6xl mx-auto px-5 mb-3 text-xs text-[var(--muted)]">Tick "Compare" on up to 3 devices to see them side by side.</p>
+
+  <!-- GRID -->
+  <section class="max-w-6xl mx-auto px-5 pb-24">
+    <div id="loadingState" class="text-center text-[var(--muted)] text-sm py-16">Loading devices…</div>
+    <div id="errorState" class="hidden text-center text-red-600 text-sm py-16 max-w-md mx-auto"></div>
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+    <p id="emptyState" class="hidden text-center text-[var(--muted)] text-sm py-16">No devices match that search. Try a different model or clear filters.</p>
+  </section>
+
+  <!-- COMPARE BAR -->
+  <div id="compareBar" class="fixed bottom-0 left-0 right-0 z-40 bg-[var(--ink)] text-white translate-y-full">
+    <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 overflow-x-auto">
+        <span class="mono text-xs text-white/60 shrink-0">Compare (<span id="compareCount">0</span>/3)</span>
+        <div id="compareThumbs" class="flex items-center gap-2"></div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="clearCompare" class="text-xs text-white/70 hover:text-white">Clear</button>
+        <button id="openCompare" class="btn-primary text-white text-sm rounded-lg px-4 py-2">Compare now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div id="compareOverlay" class="fixed inset-0 bg-[var(--ink)]/50 z-50 opacity-0 pointer-events-none"></div>
+  <div id="compareModal" class="fixed inset-x-0 bottom-0 md:inset-0 md:flex md:items-center md:justify-center z-50 opacity-0 pointer-events-none translate-y-full md:translate-y-0">
+    <div class="bg-white rounded-t-2xl md:rounded-2xl w-full md:max-w-3xl max-h-[85vh] overflow-y-auto p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold">Compare devices</h2>
+        <button id="closeCompare" class="p-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+      </div>
+      <div id="compareTable" class="overflow-x-auto"></div>
+    </div>
+  </div>
+
+  <!-- CART OVERLAY + DRAWER -->
+  <div id="cartOverlay" class="fixed inset-0 bg-[var(--ink)]/40 z-40 opacity-0 pointer-events-none"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] max-w-sm bg-white z-50 shadow-2xl translate-x-full flex flex-col p-5">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-lg font-bold">Your cart</h2>
+      <button id="closeCart" class="p-1"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <div id="cartEmpty" class="text-[var(--muted)] text-sm">No devices added yet.</div>
+    <div id="cartItems" class="flex-1 overflow-y-auto flex flex-col gap-4"></div>
+    <div id="cartFooter" class="hidden pt-4 border-t border-[var(--border)]">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm text-[var(--muted)]">Subtotal</span>
+        <span class="mono text-lg font-bold" id="cartTotal">KSh 0</span>
+      </div>
+      <button id="whatsappCheckout" class="w-full rounded-lg py-3 bg-[#25D366] text-white text-sm flex items-center justify-center gap-2 mb-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.66 0-3.2-.46-4.52-1.26l-.32-.19-3.01.79.8-2.93-.21-.3A7.94 7.94 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/></svg>
+        Order via WhatsApp
+      </button>
+      <button class="w-full rounded-lg py-3 border border-[var(--ink)] text-sm">Checkout with M-Pesa</button>
+    </div>
+  </aside>
+
+  <footer class="border-t border-[var(--border)] py-7 text-center px-5">
+    <p class="mono text-xs text-[var(--muted)] mb-1">Antech Gadgets — Nairobi, Kenya</p>
+    <p class="text-xs text-[#9AA2AF] mb-2">Independent retailer of new and certified pre-owned devices. Not affiliated with Apple or Samsung. Product photos courtesy of Wikimedia Commons contributors.</p>
+    <a href="admin.html" class="text-[10px] text-[#B7BEC9] underline hover:text-[var(--muted)]">Store admin</a>
+  </footer>
+
+<script>
+/* ================= CONFIG — fill these in ================= */
+const SUPABASE_URL = "https://rvddcsljdbgbpxghiovz.supabase.co"; // TODO
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2ZGRjc2xqZGJnYnB4Z2hpb3Z6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2OTU0MTcsImV4cCI6MjEwMTI3MTQxN30.tSmUIGCHHUpZMBx2cCfUM0HygbZ9GCM7f8y3FMTT7Rk"; // TODO — the "anon public" key, never the service_role key
+const WHATSAPP_NUMBER = "254716295285"; // TODO: your real WhatsApp business number, no + or spaces
+/* ============================================================ */
+
+const imageOverrides = {
+  "iPhone 11": "https://commons.wikimedia.org/wiki/Special:FilePath/IPhone_11_Product_RED.jpg?width=700",
+  "iPhone 12": "https://commons.wikimedia.org/wiki/Special:FilePath/Iphone-12-product--red.png?width=700",
+  "iPhone 13": "https://commons.wikimedia.org/wiki/Special:FilePath/IPhone_13.jpg?width=700",
+  "iPhone 14": "https://commons.wikimedia.org/wiki/Special:FilePath/Back%20view%20of%20iPhone%2014%20Blue.jpg?width=700",
+  "iPhone 15": "https://commons.wikimedia.org/wiki/Special:FilePath/Apple_iPhone_15.png?width=700",
+  "iPhone 16": "https://commons.wikimedia.org/wiki/Special:FilePath/Back%20of%20iPhone%2016.jpg?width=700",
+  "iPhone 17": "https://commons.wikimedia.org/wiki/Special:FilePath/White%20iPhone%2017%20(cropped).jpg?width=700",
+  "iPhone 17 Pro Max": "https://commons.wikimedia.org/wiki/Special:FilePath/Deep%20Blue%20iPhone%2017%20Pro%20Max%20(cropped).jpg?width=700",
+  "Galaxy A15": "https://commons.wikimedia.org/wiki/Special:FilePath/Samsung%20Galaxy%20A15%2020240529%20HOF7502%20RAW-Export%20cens.png?width=700",
+  "Galaxy A35": "https://commons.wikimedia.org/wiki/Special:FilePath/Samsung%20Galaxy%20A35%205G%202024%20(1).jpg?width=700",
+  "Galaxy A55": "https://commons.wikimedia.org/wiki/Special:FilePath/Samsung%20Galaxy%20A55%205G%202024%20(cropped).jpg?width=700",
+  "Galaxy S21": "https://commons.wikimedia.org/wiki/Special:FilePath/GalaxyS21%20(cropped).png?width=700",
+  "Galaxy S23": "https://commons.wikimedia.org/wiki/Special:FilePath/Galaxy%20S23%20(cropped).png?width=700",
+  "Galaxy S24": "https://commons.wikimedia.org/wiki/Special:FilePath/Samsung%20Galaxy%20S24.jpg?width=700",
+  "Galaxy S25": "https://commons.wikimedia.org/wiki/Special:FilePath/Galaxy%20S25%20Black%20(front).png?width=700",
+};
+
+function getImageUrl(p){
+  return imageOverrides[p.name] || p.image_url || "";
+}
+
+function parseStorageCapacity(storage){
+  const match = String(storage).match(/(\d+(?:\.\d+)?)(TB|GB)/i);
+  if (!match) return 0;
+  const value = Number(match[1]);
+  return match[2].toUpperCase() === "TB" ? value * 1024 : value;
+}
+
+function priceForStorage(p, storage){
+  if (!p) return 0;
+  const selected = storage || (Array.isArray(p.storage) ? p.storage[0] : "");
+  if (!selected) return Number(p.price || 0);
+  if (Array.isArray(p.storage_prices) && p.storage_prices.length === p.storage.length){
+    const idx = p.storage.findIndex(s => s === selected);
+    if (idx !== -1) return Number(p.storage_prices[idx]);
+  }
+  const basePrice = Number(p.price || 0);
+  const sizes = Array.from(new Set((p.storage || []).map(parseStorageCapacity))).filter(n => n > 0).sort((a,b) => a-b);
+  const selectedSize = parseStorageCapacity(selected);
+  if (selectedSize <= 0 || sizes.length < 2 || basePrice === 0) return basePrice;
+  const baseSize = sizes[0];
+  const ratio = selectedSize / baseSize;
+  const multiplier = 1 + Math.max(0, Math.log2(ratio)) * 0.22;
+  return Math.round(basePrice * multiplier / 100) * 100;
+}
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let products = [];
+let cart = [];
+let compareIds = [];
+let lineFilter = "All";
+let conditionFilter = "All";
+let sortMode = "featured";
+let query = "";
+const storageChoice = {};
+
+function fmtKES(n){ return "KSh " + Number(n).toLocaleString("en-KE"); }
+
+async function loadProducts(){
+  const loading = document.getElementById("loadingState");
+  const errorEl = document.getElementById("errorState");
+  const { data, error } = await sb.from("products").select("*").order("price", { ascending: true });
+  loading.classList.add("hidden");
+  if (error){
+    errorEl.textContent = "Couldn't load devices right now (" + error.message + "). Check that SUPABASE_URL and SUPABASE_ANON_KEY are set correctly in index.html.";
+    errorEl.classList.remove("hidden");
+    return;
+  }
+  products = data;
+  products.forEach(p => {
+    storageChoice[p.id] = Array.isArray(p.storage) && p.storage.length ? p.storage[0] : "";
+  });
+}
+
+/* ---------------- CHIPS / FILTER ---------------- */
+function renderChips(){
+  const lineEl = document.getElementById("lineChips");
+  lineEl.innerHTML = ["All","iPhone","Galaxy A","Galaxy S"].map(l => `
+    <button onclick="setLine('${l}')" class="chip text-sm rounded-full px-3.5 py-1.5 border ${lineFilter===l ? 'bg-[var(--ink)] text-white border-[var(--ink)]' : 'bg-white text-[var(--muted)] border-[var(--border)]'}">${l}</button>
+  `).join("");
+
+  const condEl = document.getElementById("conditionChips");
+  condEl.innerHTML = ["All","New","Refurbished"].map(c => `
+    <button onclick="setCondition('${c}')" class="chip text-sm rounded-full px-3.5 py-1.5 border ${conditionFilter===c ? 'bg-[var(--blue)] text-white border-[var(--blue)]' : 'bg-white text-[var(--muted)] border-[var(--border)]'}">${c}</button>
+  `).join("");
+}
+function setLine(l){ lineFilter = l; renderChips(); renderGrid(); }
+function setCondition(c){ conditionFilter = c; renderChips(); renderGrid(); }
+
+function filteredProducts(){
+  let list = products.filter(p => {
+    const ml = lineFilter === "All" || p.line === lineFilter;
+    const mc = conditionFilter === "All" || p.condition === conditionFilter;
+    const mq = (p.line + " " + p.name).toLowerCase().includes(query.toLowerCase());
+    return ml && mc && mq;
+  });
+  if (sortMode === "low") list = list.slice().sort((a,b) => priceForStorage(a, storageChoice[a.id]) - priceForStorage(b, storageChoice[b.id]));
+  if (sortMode === "high") list = list.slice().sort((a,b) => priceForStorage(b, storageChoice[b.id]) - priceForStorage(a, storageChoice[a.id]));
+  return list;
+}
+
+/* ---------------- STORE GRID ---------------- */
+function productCard(p){
+  const outOfStock = p.stock_quantity <= 0;
+  const lowStock = !outOfStock && p.stock_quantity <= p.low_stock_threshold;
+
+  const stampHtml = p.grade
+    ? `<div class="stamp absolute top-3 right-3 w-16 h-16 rounded-full border-2 flex items-center justify-center bg-white/90" style="border-color:${p.grade==='A'?'var(--blue)':'var(--ink)'}; color:${p.grade==='A'?'var(--blue)':'var(--ink)'}">
+         <span class="mono text-[9px] font-bold text-center leading-tight">GRADE<br/>${p.grade}</span>
+       </div>`
+    : `<span class="mono absolute top-3 left-3 text-[10px] font-semibold bg-[var(--ink)] text-white rounded px-2 py-1 tracking-wide">NEW · SEALED</span>`;
+
+  const selectedStorage = storageChoice[p.id] || p.storage[0];
+  const currentPrice = priceForStorage(p, selectedStorage);
+  const specValues = [p.screen, p.camera, p.chip].filter(Boolean);
+  const specChips = specValues.map(s => `<span class="mono text-[10px] bg-[var(--bg)] border border-[var(--border)] rounded px-1.5 py-0.5 text-[var(--muted)]">${s}</span>`).join("");
+  const batteryChip = p.condition === "Refurbished"
+    ? `<span class="mono text-[10px] bg-[var(--blue-soft)] border border-[var(--blue)]/30 rounded px-1.5 py-0.5 text-[var(--blue-dark)]">${p.battery}% battery</span>` : "";
+  const stockChip = outOfStock
+    ? `<span class="mono text-[10px] bg-red-50 border border-red-200 rounded px-1.5 py-0.5 text-red-600">Out of stock</span>`
+    : (lowStock ? `<span class="mono text-[10px] bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5 text-amber-700">Only ${p.stock_quantity} left</span>` : "");
+
+  const storageBtns = p.storage.map(s => {
+    const active = storageChoice[p.id] === s;
+    return `
+      <button onclick="setStorage('${p.id}','${s}')" data-storage-btn="${p.id}" data-storage-val="${s}"
+        class="text-[11px] rounded px-2 py-1 border ${active ? 'bg-[var(--ink)] text-white border-[var(--ink)]' : 'bg-white text-[var(--muted)] border-[var(--border)]'}">${s}${active ? ` · ${fmtKES(priceForStorage(p,s))}` : ''}</button>
+    `;
+  }).join("");
+
+  const isChecked = compareIds.includes(p.id);
+
+  return `
+  <div class="card fade-in bg-white border border-[var(--border)] rounded-2xl overflow-hidden flex flex-col ${outOfStock ? 'opacity-70' : ''}">
+    <div class="relative h-44 flex items-center justify-center" style="background:linear-gradient(180deg, ${p.line==='iPhone'?'#EAF0FE':'#EEF1F5'} 0%, #FFFFFF 100%)">
+      <img src="${getImageUrl(p)}" alt="${p.line} ${p.name}" class="h-32 object-contain" loading="lazy" decoding="async" width="200" height="200" />
+      ${stampHtml}
+    </div>
+    <div class="p-4 flex-1 flex flex-col">
+      <h3 class="font-bold text-base leading-tight mb-0.5">${p.name}</h3>
+      <p class="mono text-base font-semibold mb-2 text-[var(--blue-dark)]">${fmtKES(currentPrice)}${p.storage.length > 1 ? ` <span class="text-[var(--muted)] text-xs">(${selectedStorage})</span>` : ""}</p>
+      <div class="flex flex-wrap gap-1.5 mb-3">${specChips}${batteryChip}${stockChip}</div>
+      <div class="flex gap-1.5 mb-3 flex-wrap" id="storage-${p.id}">${storageBtns}</div>
+      <button onclick="addToCart('${p.id}')" id="add-${p.id}" ${outOfStock ? "disabled" : ""}
+        class="rounded-lg py-2.5 text-sm font-medium text-white flex items-center justify-center gap-1.5 ${outOfStock ? 'bg-gray-300 cursor-not-allowed' : 'btn-primary'}">
+        ${outOfStock ? "Out of stock" : "Add to cart"}
+      </button>
+      <label class="mt-2 flex items-center gap-2 text-xs text-[var(--muted)] cursor-pointer select-none">
+        <input type="checkbox" class="cmp-checkbox sr-only" data-cmp="${p.id}" ${isChecked ? "checked" : ""} onchange="toggleCompare('${p.id}', this.checked)" />
+        <span class="cmp-label w-4 h-4 rounded border border-[var(--border)] flex items-center justify-center transition ${isChecked ? 'bg-[var(--ink)] border-[var(--ink)]' : ''}">
+          ${isChecked ? '<svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+        </span>
+        Compare
+      </label>
+      <a href="${p.source_url || '#'}" target="_blank" rel="noopener" class="mono text-[9px] text-[#B7BEC9] mt-2 hover:text-[var(--muted)]">Photo source ↗</a>
+    </div>
+  </div>`;
+}
+
+function renderGrid(){
+  const list = filteredProducts();
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("emptyState");
+  if (list.length === 0){
+    grid.innerHTML = "";
+    empty.classList.remove("hidden");
+  } else {
+    empty.classList.add("hidden");
+    grid.innerHTML = list.map(productCard).join("");
+  }
+}
+
+function setStorage(id, val){
+  storageChoice[id] = val;
+  renderGrid();
+}
+
+/* ---------------- CART ---------------- */
+function addToCart(id){
+  const p = products.find(p => p.id === id);
+  if (!p || p.stock_quantity <= 0) return;
+  const storage = storageChoice[id];
+  const existing = cart.find(i => i.id === id && i.storage === storage);
+  const currentQty = existing ? existing.qty : 0;
+  if (currentQty + 1 > p.stock_quantity){
+    alert(`Only ${p.stock_quantity} in stock.`);
+    return;
+  }
+  if (existing) existing.qty += 1;
+  else cart.push({ id, storage, qty: 1 });
+  renderCart();
+
+  const btn = document.getElementById("add-" + id);
+  const original = btn.textContent;
+  btn.textContent = "Added ✓";
+  btn.classList.remove("btn-primary");
+  btn.classList.add("bg-[var(--ink)]");
+  setTimeout(() => { btn.textContent = original; btn.classList.add("btn-primary"); btn.classList.remove("bg-[var(--ink)]"); }, 1000);
+}
+
+function updateQty(id, storage, delta){
+  const item = cart.find(i => i.id === id && i.storage === storage);
+  if (!item) return;
+  item.qty += delta;
+  cart = cart.filter(i => i.qty > 0);
+  renderCart();
+}
+
+function cartTotalValue(){
+  return cart.reduce((sum, i) => {
+    const p = products.find(p => p.id === i.id);
+    return sum + (p ? priceForStorage(p, i.storage) * i.qty : 0);
+  }, 0);
+}
+
+function renderCart(){
+  const count = cart.reduce((n,i) => n + i.qty, 0);
+  document.getElementById("cartCount").textContent = count;
+
+  const itemsEl = document.getElementById("cartItems");
+  const emptyEl = document.getElementById("cartEmpty");
+  const footerEl = document.getElementById("cartFooter");
+
+  if (cart.length === 0){
+    itemsEl.innerHTML = "";
+    emptyEl.classList.remove("hidden");
+    footerEl.classList.add("hidden");
+    return;
+  }
+  emptyEl.classList.add("hidden");
+  footerEl.classList.remove("hidden");
+
+  itemsEl.innerHTML = cart.map(item => {
+    const p = products.find(p => p.id === item.id);
+    if (!p) return "";
+    return `
+    <div class="flex items-center gap-3 border-b border-[var(--border)] pb-3">
+      <img src="${getImageUrl(p)}" loading="lazy" decoding="async" class="w-10 h-14 object-contain shrink-0" alt="${p.name}" width="40" height="56" />
+      <div class="flex-1">
+        <p class="text-sm font-semibold">${p.name}</p>
+        <p class="mono text-[11px] text-[var(--muted)]">${item.storage} · ${p.condition}${p.grade ? ' · Grade '+p.grade : ''}</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="updateQty('${item.id}','${item.storage}',-1)" class="w-5 h-5 border border-[var(--border)] rounded flex items-center justify-center text-xs">−</button>
+        <span class="mono text-xs w-4 text-center">${item.qty}</span>
+        <button onclick="updateQty('${item.id}','${item.storage}',1)" class="w-5 h-5 border border-[var(--border)] rounded flex items-center justify-center text-xs">+</button>
+      </div>
+      <span class="mono text-xs w-20 text-right">${fmtKES(priceForStorage(p, item.storage) * item.qty)}</span>
+    </div>`;
+  }).join("");
+
+  document.getElementById("cartTotal").textContent = fmtKES(cartTotalValue());
+}
+
+function openCart(){
+  document.getElementById("cartDrawer").classList.remove("translate-x-full");
+  document.getElementById("cartOverlay").classList.remove("opacity-0","pointer-events-none");
+}
+function closeCartFn(){
+  document.getElementById("cartDrawer").classList.add("translate-x-full");
+  document.getElementById("cartOverlay").classList.add("opacity-0","pointer-events-none");
+}
+
+/* ---------------- COMPARE ---------------- */
+function toggleCompare(id, checked){
+  if (checked){
+    if (compareIds.length >= 3){
+      alert("You can compare up to 3 devices at a time.");
+      renderGrid();
+      return;
+    }
+    compareIds.push(id);
+  } else {
+    compareIds = compareIds.filter(x => x !== id);
+  }
+  renderCompareBar();
+  renderGrid();
+}
+
+function renderCompareBar(){
+  const bar = document.getElementById("compareBar");
+  const count = document.getElementById("compareCount");
+  const thumbs = document.getElementById("compareThumbs");
+  count.textContent = compareIds.length;
+  if (compareIds.length === 0) bar.classList.add("translate-y-full");
+  else bar.classList.remove("translate-y-full");
+  thumbs.innerHTML = compareIds.map(id => {
+    const p = products.find(p => p.id === id);
+    if (!p) return "";
+    return `<span class="flex items-center gap-1 bg-white/10 rounded-full pl-1 pr-2 py-1 text-xs">
+      <img src="${getImageUrl(p)}" loading="lazy" decoding="async" class="w-5 h-5 object-contain rounded-full bg-white" alt="${p.name}" width="20" height="20" />
+      ${p.name}
+    </span>`;
+  }).join("");
+}
+
+function buildCompareTable(){
+  const items = compareIds.map(id => products.find(p => p.id === id)).filter(Boolean);
+  if (items.length === 0) return "<p class='text-sm text-[var(--muted)]'>Select devices to compare.</p>";
+  const rows = [
+    { label: "Price", get: p => fmtKES(priceForStorage(p, storageChoice[p.id] || p.storage[0])) },
+    { label: "Condition", get: p => p.grade ? `${p.condition} · Grade ${p.grade}` : p.condition },
+    { label: "Screen", get: p => p.screen || "—" },
+    { label: "Camera", get: p => p.camera || "—" },
+    { label: "Chip", get: p => p.chip || "—" },
+    { label: "Storage options", get: p => p.storage.join(", ") },
+    { label: "Battery health", get: p => p.condition === "Refurbished" ? p.battery + "%" : "100% (new)" },
+    { label: "In stock", get: p => p.stock_quantity },
+  ];
+  let html = `<table class="w-full text-sm border-collapse">
+    <thead><tr><th class="text-left p-2 text-[var(--muted)] font-normal w-28"></th>
+      ${items.map(p => `<th class="p-2 text-center"><img src="${getImageUrl(p)}" loading="lazy" decoding="async" class="h-16 object-contain mx-auto mb-1" alt="${p.name}" width="96" height="96" /><div class="font-bold text-sm">${p.name}</div></th>`).join("")}
+    </tr></thead><tbody>`;
+  rows.forEach((row, idx) => {
+    html += `<tr class="${idx % 2 === 0 ? 'bg-[var(--bg)]' : ''}"><td class="p-2 mono text-xs text-[var(--muted)]">${row.label}</td>${items.map(p => `<td class="p-2 text-center text-sm">${row.get(p)}</td>`).join("")}</tr>`;
+  });
+  html += `</tbody></table>`;
+  return html;
+}
+
+function openCompare(){
+  document.getElementById("compareTable").innerHTML = buildCompareTable();
+  document.getElementById("compareModal").classList.remove("opacity-0","pointer-events-none","translate-y-full");
+  document.getElementById("compareOverlay").classList.remove("opacity-0","pointer-events-none");
+}
+function closeCompare(){
+  document.getElementById("compareModal").classList.add("opacity-0","pointer-events-none","translate-y-full");
+  document.getElementById("compareOverlay").classList.add("opacity-0","pointer-events-none");
+}
+
+/* ---------------- BINDINGS ---------------- */
+document.getElementById("cartBtn").addEventListener("click", openCart);
+document.getElementById("closeCart").addEventListener("click", closeCartFn);
+document.getElementById("cartOverlay").addEventListener("click", closeCartFn);
+document.getElementById("whatsappCheckout").addEventListener("click", () => {
+  const lines = cart.map(i => {
+    const p = products.find(p => p.id === i.id);
+    return p ? `- ${p.name} (${i.storage}) x${i.qty}` : "";
+  }).filter(Boolean).join("\n");
+  const msg = encodeURIComponent(`Hi Antech Gadgets, I'd like to order:\n${lines}\nTotal: ${fmtKES(cartTotalValue())}`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+});
+document.getElementById("clearCompare").addEventListener("click", () => { compareIds = []; renderCompareBar(); renderGrid(); });
+document.getElementById("openCompare").addEventListener("click", openCompare);
+document.getElementById("closeCompare").addEventListener("click", closeCompare);
+document.getElementById("compareOverlay").addEventListener("click", closeCompare);
+document.getElementById("sortSelect").addEventListener("change", (e) => { sortMode = e.target.value; renderGrid(); });
+document.getElementById("searchInput").addEventListener("input", (e) => { query = e.target.value; document.getElementById("searchInputMobile").value = query; renderGrid(); });
+document.getElementById("searchInputMobile").addEventListener("input", (e) => { query = e.target.value; document.getElementById("searchInput").value = query; renderGrid(); });
+
+(async function init(){
+  await loadProducts();
+  renderChips();
+  renderGrid();
+  renderCart();
+  renderCompareBar();
+})();
+</script>
+</body>
+</html>
